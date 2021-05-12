@@ -1,0 +1,7 @@
+/**
+ * 조각 쉐이더
+ */
+
+void main(void) {
+  gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0)
+}

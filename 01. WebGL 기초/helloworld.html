@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="kr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://webglfundamentals.org/webgl/resources/webgl-utils.js"></script>
+    <script src="js/HelloWorld.js"></script>
+    <title>Hello world</title>
+    <style>
+      body {
+        margin: 0;
+      }
+      canvas {
+        width: 100vw;
+        height: 100vh;
+        display: block;
+      }
+    </style>
+  </head>
+  <body onload="start()">
+    <canvas id="c"></canvas>
+    <script id="vertex-shader-2d" type="notjs">
+
+      // an attribute will receive data from a buffer
+      // attribute vec4 a_position;
+      attribute vec2 a_position;
+
+      uniform vec2 u_resolution;
+
+      // all shaders have a main function
+      void main() {
+
+        // gl_Position is a special variable a vertex shader
+        // is responsible for setting
+        
+        // 위치를 픽셀에서 0.0과 1.0사이로 변환
+        vec2 zeroToOne = a_position / u_resolution;
+        
+        // 0->1에서 0->2로 변환
+        vec2 zeroToTwo = zeroToOne * 2.0;
+        
+        // 0->2에서 -1->+1로 변환 (clip space)
+        vec2 clipSpace = zeroToTwo - 1.0;
+
+        // gl_Position = a_position;
+        gl_Position = vec4(clipSpace, 0, 1);
+
+        // clicp space y 좌표 집기
+        // gl_Position = vec4(clipSpace * vec2(1, -1), 0, 1);
+      }
+    </script>
+    <script id="fragment-shader-2d" type="notjs">
+
+      // fragment shaders don't have a default precision so we need
+      // to pick one. mediump is a good default
+      precision mediump float;
+
+      void main() {
+        // gl_FragColor is a special variable a fragment shader
+        // is responsible for setting
+        
+        gl_FragColor = vec4(1, 0, 0.5, 1); // return redish-purple
+      }
+    </script>
+  </body>
+</html>
